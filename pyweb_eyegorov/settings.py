@@ -14,15 +14,12 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 import mimetypes
+
 mimetypes.add_type("text/css", ".css", True)
-
-
-
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,9 +31,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv("DEBUG"))
+DEBUG = bool(os.getenv("DEBUG")) == 'true'
 
-ALLOWED_HOSTS = [os.getenv("ALLOWED_HOSTS")]
+ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS").split(',')]
 
 # Application definition
 
@@ -127,7 +124,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'login/static')),
 
 
 
