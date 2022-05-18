@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'common',
     'login',
+    'blog',
 ]
 
 MIDDLEWARE = [
