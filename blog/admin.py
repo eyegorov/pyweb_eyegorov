@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.db import
+from .models import Note
 
 
 @admin.register(Note)  # связываем админку с моделью
