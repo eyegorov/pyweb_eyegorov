@@ -1,12 +1,34 @@
-from django.shortcuts import render
-from django.views import View
+from django.shortcuts import get_object_or_404
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-# from rest_framework.request import Request
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
-#
-# from .models import Note
-#
-# class NoteListCreateAPIView(APIView):
-#     def get(self, request: Request) -> Response:
-#         return Response(Note.objects.all())
+from blog.models import Note
+from blog_api import serializers
+
+
+class NoteListCreateAPIView(APIView):
+
+    """ Представление, возвращает список объектов с помощью get """
+
+    def get(self, request: Request):
+        objects = Note.objects.all()
+        serializer = serializers.NoteSerializer(
+            instance=objects,
+            many=True,
+        )
+        return Response(serializer.data)
+
+    def post(self, request: Request):
+        serializer = serializers.NoteSerializer(data=request.data)
+
+
+class NoteDetailAPIView(APIView):
+    """ Представление, возвращает уже существующий объект с помощью GET метода."""
+
+    def get(self, request, pk):
+        note = get_object_or_404(Note, pk=pk)
+        serializer = serializers.NoteDetailSerializer(
+            instance=note,
+        )
+        return Response(serializer.data)
