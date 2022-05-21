@@ -18,7 +18,7 @@ class Note(models.Model):
 class Comment(models.Model):
     """ Комментарии и оценки к статьям """
 
-    class Ratings(models.IntegerChoices):  # https://docs.djangoproject.com/en/4.0/ref/models/fields/#enumeration-types
+    class Ratings(models.IntegerChoices):  
         WITHOUT_RATING = 0, _('Без оценки')
         TERRIBLE = 1, _('Ужасно')
         BADLY = 2, _('Плохо')

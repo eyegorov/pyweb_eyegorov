@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,7 +9,6 @@ from blog_api import serializers
 
 
 class NoteListCreateAPIView(APIView):
-
     """ Представление, возвращает список объектов с помощью get """
 
     def get(self, request: Request):
@@ -32,3 +32,13 @@ class NoteDetailAPIView(APIView):
             instance=note,
         )
         return Response(serializer.data)
+
+
+class PublicNoteListAPIView(ListAPIView):
+    queryset = Note.objects.all()
+    serializer_class = serializers.NoteSerializer
+
+
+def get_queryset(self):
+    queryset = super().get_queryset()
+    return queryset.filter(public=True)

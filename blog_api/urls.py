@@ -1,10 +1,8 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include("blog.urls")),
-    path('notes/', views.NoteListCreateAPIView)
+    path('notes/', views.NoteListCreateAPIView.as_view()),
+    path('notes/public/', views.PublicNoteListAPIView.as_view(),)
 ]
