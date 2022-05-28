@@ -127,9 +127,34 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,  # (Встроенный механизм логгирования, включен по умолчанию)
+    'filters': {               # Filters - с его помощью можно задать доп условия для фильтрации log сообщений
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {  # обработчик log сообщений (что делать с log сообщением)
+        'console': {
+            'level': 'DEBUG',   # Задается в handlers
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {  # Именованная Корзина (уровень отлавливаемых ошибок и тп),
+        # в которую можно писать log сообщения
+        'django.db.backends': {
+            'level': 'DEBUG',      # Здесь в logger будут записываться только сообщения уровня DEBUG;
+            'handlers': ['console'],
+        }
+    }
+}
+# 'formatters' - форматирует log сообщения (можно добавить любую информацию, host name компьютера, время, пользователя
+# и тп
+
