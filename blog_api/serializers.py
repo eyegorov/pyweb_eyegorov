@@ -1,13 +1,14 @@
+
+
 from rest_framework import serializers
 
 from blog.models import Note, Comment
 
 
 class NoteSerializer(serializers.ModelSerializer):
-    class Meta:  # Класс, описывающий конфигурацию
-        model = Note  # Базовая модель, на которую опирается
-        fields = "__all__" # Поля,которые буду выводиться
-        read_only = "author_at"  # Поля,которые не будут выводиться
+    class Meta: # Класс, описывающий конфигурацию
+        model = Note # Базовая модель, на которую опирается
+        fields = ("author_at", ) # Поля,которые буду
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -38,3 +39,4 @@ class NoteDetailSerializer(serializers.ModelSerializer):
             'title', 'message', 'create_at', 'update_at', 'public',  # из модели
             'author_at', 'comments',  # данные из models.py, заголовки атрибуты (поля) должны быть идентичны
         )
+
